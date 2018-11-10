@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
+  </head>
+  <body>
+    <div id="addBTN_div">
+      <form id="motherFuckerForm">
+        <div class="formItem">
+          ID Card or Passpord:
+          <div><input name="PersonalID" /></div>
+        </div>
+        <div class="formItem">
+          Name :
+          <div><input name="Name" id="Name" /></div>
+        </div>
+        <div>
+          Afflilition :
+          <div><input name="Afflilition" /></div>
+        </div>
+        <div>
+          Title :
+          <div><input name="Title" /></div>
+        </div>
+        <div>
+          ScholarId :
+          <div><input name="ScholarId" /></div>
+        </div>
+        <div>
+          Reseache Feild :
+          <div id="inputRsfDiv"></div>
+          <button type="button" id="btnPlus">Reseache Feild</button>
+        </div>
+        <div style="margin: 8px"><button type="submit">submit</button></div>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#btnPlus').click(function() {
+          var divBTN = $('#inputRsfDiv');
+          //console.log(divBTN)
+          var inputRsfDivChilds = document.getElementById('inputRsfDiv')
+            .childNodes;
+          var inputLength = inputRsfDivChilds.length;
+          divBTN.append('<div><input id="res_' + inputLength + '"/></div>');
+        });
+        $('#motherFuckerForm').submit(function(e) {
+          e.preventDefault();
+          var PersonalID = $("input[name='PersonalID']").val();
+          var Name = $("input[name='Name']").val();
+          var Afflilition = $("input[name='Afflilition']").val();
+          var Title = $("input[name='Title']").val();
+          var ScholarId = $("input[name='ScholarId']").val();
+          var inputRsfDivChilds = document.getElementById('inputRsfDiv')
+            .childNodes;
+          if (inputRsfDivChilds.length < 0) {
+            console.log('Stupid Person');
+          } else {
+            console.log('check ว่า แต่ล่ะ node มี value');
+            var checkInput = 0;
+            var researchFields = [];
+            for (var i = 0; i < inputRsfDivChilds.length; i++) {
+              //console.log(inputRsfDivChilds[i]);
+              var currentValue = $('#res_' + i).val();
+              if (currentValue) {
+                researchFields.push(currentValue);
+                checkInput = checkInput + 1;
+              }
+            }
+            console.log(checkInput);
+            if (checkInput === inputRsfDivChilds.length) {
+              const data = {
+                PersonalID: PersonalID,
+                Name: Name,
+                Afflilition: Afflilition,
+                Title: Title,
+                ScholarId: ScholarId,
+                'ResearchFields[]': researchFields
+              };
+              console.log(data);
+              //   $.post('xxx.php', data, function(result) {});
+            } else {
+              console.log('Fuck You');
+            }
+          }
+          console.log(inputRsfDiv);
+        });
+      });
+    </script>
+  </body>
+</html>
